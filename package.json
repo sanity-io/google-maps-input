@@ -48,7 +48,7 @@
     "@sanity/incompatible-plugin": "^1.0.1",
     "@sanity/ui": "^0.38.0",
     "lodash": "^4.17.21",
-    "rxjs": "^6.5.3"
+    "rxjs": "^7.5.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
