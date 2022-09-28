@@ -46,8 +46,14 @@ jobs:
     needs: build
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest ]
-        node: [ lts/*, current ]
+        os: [ubuntu-latest]
+        node: [12, current]
+        include:
+          # mac and windows only need to test the LTS version of node, and ubuntu tests lts on the `build` job
+          - os: macos-latest
+            node: lts/*
+          - os: windows-latest
+            node: lts/*
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
