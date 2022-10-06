@@ -1,4 +1,4 @@
-import {DiffComponent, DiffComponentOptions, ObjectDiff} from 'sanity/_unstable'
+import {DiffComponent, DiffComponentOptions, ObjectDiff} from 'sanity'
 import {ObjectSchemaType} from 'sanity'
 
 export interface LatLng {

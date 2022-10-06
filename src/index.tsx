@@ -26,12 +26,14 @@ export const googleMapsInput = createPlugin<GoogleMapsInputConfig>((config) => {
   return {
     name: 'google-maps-input',
     form: {
-      renderInput: (props) => {
-        if (isGeopoint(props.schemaType)) {
-          const castedProps = props as unknown as Omit<GeopointInputProps, 'geoConfig'>
-          return <GeopointInput {...castedProps} geoConfig={config} />
-        }
-        return undefined
+      components: {
+        input(props) {
+          if (isGeopoint(props.schemaType)) {
+            const castedProps = props as unknown as Omit<GeopointInputProps, 'geoConfig'>
+            return <GeopointInput {...castedProps} geoConfig={config} />
+          }
+          return props.renderDefault(props)
+        },
       },
     },
   }

@@ -1,11 +1,5 @@
 import * as React from 'react'
-import {
-  ArrayDiff,
-  ObjectDiff,
-  Diff,
-  DiffProps as GenericDiffProps,
-  DiffComponent,
-} from 'sanity/_unstable'
+import {ArrayDiff, ObjectDiff, Diff, DiffProps as GenericDiffProps, DiffComponent} from 'sanity'
 import {GoogleMapsLoadProxy} from '../loader/GoogleMapsLoadProxy'
 import {GoogleMap} from '../map/Map'
 import {Geopoint} from '../types'
