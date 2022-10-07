@@ -44,7 +44,7 @@
     "sanity-plugin"
   ],
   "dependencies": {
-    "@sanity/incompatible-plugin": "^1.0.3",
+    "@sanity/incompatible-plugin": "^1.0.4",
     "lodash": "^4.17.21",
     "rxjs": "^6.6.7"
   },
