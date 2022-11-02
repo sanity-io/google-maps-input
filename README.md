@@ -40,7 +40,7 @@ Add it as a plugin in sanity.config.ts (or .js), with a valid [Google Maps API k
 ```js
 import { googleMapsInput } from "@sanity/google-maps-input";
 
-export default createConfig({
+export default defineConfig({
   // ...
   plugins: [
       googleMapsInput({
