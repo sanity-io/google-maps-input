@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0-v3-studio.8](https://github.com/sanity-io/google-maps-input/compare/v3.0.0-v3-studio.7...v3.0.0-v3-studio.8) (2022-11-04)
+
+### Bug Fixes
+
+- **deps:** pkg-utils & @sanity/plugin-kit ([e1a7053](https://github.com/sanity-io/google-maps-input/commit/e1a70534bd443b15aaf1c182b281085f49892d7c))
+
 ## [3.0.0-v3-studio.7](https://github.com/sanity-io/google-maps-input/compare/v3.0.0-v3-studio.6...v3.0.0-v3-studio.7) (2022-11-02)
 
 ### Bug Fixes
