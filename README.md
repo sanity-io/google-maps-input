@@ -1,9 +1,6 @@
 # @sanity/google-maps-input
 
-> **NOTE**
->
-> This is the **Sanity Studio v3 version** of @sanity/google-maps-input.
->
+>T his is a **Sanity Studio v3** plugin.
 > For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity/tree/next/packages/%40sanity/google-maps-input).
 
 ## What is it? 
@@ -24,13 +21,13 @@ These will be re-added well before Studio V3 GA.
 In your studio folder, run:
 
 ```
-npm install --save @sanity/google-maps-input@studio-v3
+npm install --save @sanity/google-maps-input
 ```
 
 or
 
 ```
-yarn add @sanity/google-maps-input@studio-v3
+yarn add @sanity/google-maps-input
 ```
 
 ## Usage
