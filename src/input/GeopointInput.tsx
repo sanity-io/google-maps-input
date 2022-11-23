@@ -1,49 +1,72 @@
+// @todo: remove the following line when part imports has been removed from this file
+///<reference types="@sanity/types/parts" />
+
 import React from 'react'
 import {uniqueId} from 'lodash'
-import {Box, Button, Dialog, Grid} from '@sanity/ui'
-import {EditIcon, TrashIcon} from '@sanity/icons'
-import {ChangeIndicator} from 'sanity/_unstable'
-import {ObjectInputProps, set, setIfMissing, unset} from 'sanity/form'
+import {Box, Grid, Button, Dialog} from '@sanity/ui'
+import {TrashIcon, EditIcon} from '@sanity/icons'
+import {Path, Marker} from '@sanity/types'
+import config from 'config:@sanity/google-maps-input'
+import {FormFieldSet} from '@sanity/base/components'
+import {FormFieldPresence} from '@sanity/base/presence'
+import {PatchEvent, set, setIfMissing, unset} from 'part:@sanity/form-builder/patch-event'
+import {ChangeIndicatorCompareValueProvider, ChangeIndicator} from '@sanity/base/change-indicators'
 import {GoogleMapsLoadProxy} from '../loader/GoogleMapsLoadProxy'
-import {Geopoint, GeopointSchemaType, LatLng} from '../types'
+import {Geopoint, GeopointSchemaType} from '../types'
 import {GeopointSelect} from './GeopointSelect'
-import {DialogInnerContainer, PreviewImage} from './GeopointInput.styles'
-import {GoogleMapsInputConfig} from '../index'
-import {getGeoConfig} from '../global-workaround'
+import {PreviewImage, DialogInnerContainer} from './GeopointInput.styles'
 
-const getStaticImageUrl = (value: LatLng, apiKey: string) => {
+const getStaticImageUrl = (value) => {
   const loc = `${value.lat},${value.lng}`
   const params = {
-    key: apiKey,
+    key: config.apiKey,
     center: loc,
     markers: loc,
     zoom: 13,
     scale: 2,
     size: '640x300',
-  } as const
+  }
+
   const qs = Object.keys(params).reduce((res, param) => {
-    return res.concat(`${param}=${encodeURIComponent(params[param as keyof typeof params])}`)
+    return res.concat(`${param}=${encodeURIComponent(params[param])}`)
   }, [] as string[])
 
   return `https://maps.googleapis.com/maps/api/staticmap?${qs.join('&')}`
 }
 
-export type GeopointInputProps = ObjectInputProps<Geopoint, GeopointSchemaType> & {
-  geoConfig: GoogleMapsInputConfig
+interface InputProps {
+  markers: Marker[]
+  level?: number
+  value?: Geopoint
+  compareValue?: Geopoint
+  type: GeopointSchemaType
+  readOnly?: boolean
+  onFocus: (path: Path) => void
+  onBlur: () => void
+  onChange: (patchEvent: unknown) => void
+  presence: FormFieldPresence[]
 }
 
+// @todo
+// interface Focusable {
+//   focus: () => void
+// }
 type Focusable = any
 
 interface InputState {
   modalOpen: boolean
 }
 
-class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> {
+class GeopointInput extends React.PureComponent<InputProps, InputState> {
   _geopointInputId = uniqueId('GeopointInput')
+
+  static defaultProps = {
+    markers: [],
+  }
 
   editButton: Focusable | undefined
 
-  constructor(props: GeopointInputProps) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -61,8 +84,26 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
     }
   }
 
+  handleFocus = (event) => {
+    this.props.onFocus(event)
+  }
+
+  handleBlur = () => {
+    this.props.onBlur()
+  }
+
   handleToggleModal = () => {
-    this.setState((prevState) => ({modalOpen: !prevState.modalOpen}))
+    const {onFocus, onBlur} = this.props
+    this.setState(
+      (prevState) => ({modalOpen: !prevState.modalOpen}),
+      () => {
+        if (this.state.modalOpen) {
+          onFocus(['$'])
+        } else {
+          onBlur()
+        }
+      }
+    )
   }
 
   handleCloseModal = () => {
@@ -70,24 +111,25 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
   }
 
   handleChange = (latLng: google.maps.LatLng) => {
-    const {schemaType, onChange} = this.props
-    onChange([
-      setIfMissing({
-        _type: schemaType.name,
-      }),
-      set(latLng.lat(), ['lat']),
-      set(latLng.lng(), ['lng']),
-    ])
+    const {type, onChange} = this.props
+    onChange(
+      PatchEvent.from([
+        setIfMissing({
+          _type: type.name,
+        }),
+        set(latLng.lat(), ['lat']),
+        set(latLng.lng(), ['lng']),
+      ])
+    )
   }
 
   handleClear = () => {
     const {onChange} = this.props
-    onChange(unset())
+    onChange(PatchEvent.from(unset()))
   }
 
   render() {
-    const {value, readOnly, geoConfig: config, path, changed, focused} = this.props
-
+    const {value, compareValue, readOnly, type, markers, level, presence} = this.props
     const {modalOpen} = this.state
 
     if (!config || !config.apiKey) {
@@ -103,70 +145,85 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
             <li>Google Static Maps API</li>
           </ul>
           <p>
-            Please enter the API key with access to these services in your googleMapsInput plugin
-            config.
+            Please enter the API key with access to these services in
+            <code style={{whiteSpace: 'nowrap'}}>
+              `&lt;project-root&gt;/config/@sanity/google-maps-input.json`
+            </code>
           </p>
         </div>
       )
     }
 
     return (
-      <>
-        {value && (
-          <ChangeIndicator path={path} isChanged={changed} hasFocus={!!focused}>
-            <PreviewImage src={getStaticImageUrl(value, config.apiKey)} alt="Map location" />
-          </ChangeIndicator>
-        )}
+      <FormFieldSet
+        level={level}
+        title={type.title}
+        description={type.description}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        __unstable_presence={presence}
+        __unstable_changeIndicator={false}
+        __unstable_markers={markers}
+      >
+        <div>
+          {value && (
+            <ChangeIndicatorCompareValueProvider value={value} compareValue={compareValue}>
+              <ChangeIndicator compareDeep>
+                <PreviewImage src={getStaticImageUrl(value)} alt="Map location" />
+              </ChangeIndicator>
+            </ChangeIndicatorCompareValueProvider>
+          )}
 
-        {!readOnly && (
-          <Box marginTop={4}>
-            <Grid columns={2} gap={2}>
-              <Button
-                mode="ghost"
-                icon={value && EditIcon}
-                padding={3}
-                ref={this.setEditButton}
-                text={value ? 'Edit' : 'Set location'}
-                onClick={this.handleToggleModal}
-              />
-
-              {value && (
+          {!readOnly && (
+            <Box marginTop={4}>
+              <Grid columns={2} gap={2}>
                 <Button
-                  tone="critical"
-                  icon={TrashIcon}
-                  padding={3}
                   mode="ghost"
-                  text={'Remove'}
-                  onClick={this.handleClear}
+                  icon={value && EditIcon}
+                  padding={3}
+                  ref={this.setEditButton}
+                  text={value ? 'Edit' : 'Set location'}
+                  onClick={this.handleToggleModal}
                 />
-              )}
-            </Grid>
-          </Box>
-        )}
 
-        {modalOpen && (
-          <Dialog
-            id={`${this._geopointInputId}_dialog`}
-            onClose={this.handleCloseModal}
-            header="Place the marker on the map"
-            width={1}
-          >
-            <DialogInnerContainer>
-              <GoogleMapsLoadProxy config={getGeoConfig()}>
-                {(api) => (
-                  <GeopointSelect
-                    api={api}
-                    value={value || undefined}
-                    onChange={readOnly ? undefined : this.handleChange}
-                    defaultLocation={config.defaultLocation}
-                    defaultZoom={config.defaultZoom}
+                {value && (
+                  <Button
+                    tone="critical"
+                    icon={TrashIcon}
+                    padding={3}
+                    mode="ghost"
+                    text={'Remove'}
+                    onClick={this.handleClear}
                   />
                 )}
-              </GoogleMapsLoadProxy>
-            </DialogInnerContainer>
-          </Dialog>
-        )}
-      </>
+              </Grid>
+            </Box>
+          )}
+
+          {modalOpen && (
+            <Dialog
+              id={`${this._geopointInputId}_dialog`}
+              onClose={this.handleCloseModal}
+              header="Place the marker on the map"
+              width={1}
+            >
+              <DialogInnerContainer>
+                <GoogleMapsLoadProxy>
+                  {(api) => (
+                    <GeopointSelect
+                      api={api}
+                      value={value}
+                      onChange={readOnly ? undefined : this.handleChange}
+                      defaultLocation={config.defaultLocation}
+                      defaultZoom={config.defaultZoom}
+                    />
+                  )}
+                </GoogleMapsLoadProxy>
+              </DialogInnerContainer>
+            </Dialog>
+          )}
+        </div>
+      </FormFieldSet>
     )
   }
 }

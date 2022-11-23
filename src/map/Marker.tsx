@@ -10,6 +10,8 @@ interface Props {
   map: google.maps.Map
   onMove?: (event: google.maps.MapMouseEvent) => void
   onClick?: (event: google.maps.MapMouseEvent) => void
+  onMouseOver?: (event: google.maps.MapMouseEvent) => void
+  onMouseOut?: (event: google.maps.MapMouseEvent) => void
   position: LatLng | google.maps.LatLng
   zIndex?: number
   opacity?: number
@@ -30,7 +32,7 @@ export class Marker extends React.PureComponent<Props> {
     const {position, api, map, onMove, zIndex, opacity, label, markerRef, color} = this.props
     const {Marker: GMarker} = api
 
-    let icon: google.maps.Symbol | undefined
+    let icon: google.maps.ReadonlySymbol | undefined
     if (color) {
       icon = {
         path: markerPath,
@@ -124,7 +126,7 @@ export class Marker extends React.PureComponent<Props> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  render(): any {
+  render() {
     return null
   }
 }

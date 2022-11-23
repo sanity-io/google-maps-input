@@ -2,11 +2,9 @@ import React from 'react'
 import {Subscription} from 'rxjs'
 import {loadGoogleMapsApi, GoogleLoadState} from './loadGoogleMapsApi'
 import {LoadError} from './LoadError'
-import {GoogleMapsInputConfig} from '../index'
 
 interface LoadProps {
   children: (api: typeof window.google.maps) => React.ReactElement
-  config: GoogleMapsInputConfig
 }
 
 export class GoogleMapsLoadProxy extends React.Component<LoadProps, GoogleLoadState> {
@@ -18,7 +16,7 @@ export class GoogleMapsLoadProxy extends React.Component<LoadProps, GoogleLoadSt
     this.state = {loadState: 'loading'}
 
     let sync = true
-    this.loadSubscription = loadGoogleMapsApi(props.config).subscribe((loadState) => {
+    this.loadSubscription = loadGoogleMapsApi().subscribe((loadState) => {
       if (sync) {
         this.state = loadState
       } else {

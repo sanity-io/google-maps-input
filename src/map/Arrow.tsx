@@ -70,7 +70,7 @@ export class Arrow extends React.PureComponent<Props> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  render(): any {
+  render() {
     return null
   }
 }

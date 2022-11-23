@@ -1,12 +1,8 @@
-import {Observable, BehaviorSubject} from 'rxjs'
-import {GoogleMapsInputConfig} from '../index'
+// @todo: remove the following line when part imports has been removed from this file
+///<reference types="@sanity/types/parts" />
 
-declare global {
-  interface Window {
-    gm_authFailure: any
-    ___sanity_googleMapsApiCallback: any
-  }
-}
+import {Observable, BehaviorSubject} from 'rxjs'
+import config from 'config:@sanity/google-maps-input'
 
 const callbackName = '___sanity_googleMapsApiCallback'
 const authFailureCallbackName = 'gm_authFailure'
@@ -34,7 +30,7 @@ export type GoogleLoadState = LoadingState | LoadedState | LoadErrorState | Auth
 
 let subject: BehaviorSubject<GoogleLoadState>
 
-export function loadGoogleMapsApi(config: GoogleMapsInputConfig): Observable<GoogleLoadState> {
+export function loadGoogleMapsApi(): Observable<GoogleLoadState> {
   const selectedLocale = config.defaultLocale || locale || 'en-US'
 
   if (subject) {

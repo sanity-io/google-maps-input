@@ -4,4 +4,4 @@ lib
 lint-staged.config.js
 *.md
 *.yml
-*.js
+dts

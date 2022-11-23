@@ -19,7 +19,7 @@ export function LoadError(props: Props) {
           <>
             <Text as="h3">Error details:</Text>
             <pre>
-              <Code size={1}>{'error' in props && props.error?.message}</Code>
+              <Code size={1}>{props.error?.message}</Code>
             </pre>
           </>
         )}

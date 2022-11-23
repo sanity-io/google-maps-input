@@ -1,8 +1,18 @@
 {
+  "paths": {
+    "source": "./src",
+    "compiled": "./lib"
+  },
+
   "parts": [
     {
-      "implements": "part:@sanity/base/sanity-root",
-      "path": "./v2-incompatible.js"
+      "name": "part:@sanity/google-maps-input/input/geopoint",
+      "implements": "part:@sanity/form-builder/input/geopoint",
+      "path": "input/GeopointInput"
+    },
+    {
+      "implements": "part:@sanity/base/diff-resolver",
+      "path": "diff/resolver"
     }
   ]
 }

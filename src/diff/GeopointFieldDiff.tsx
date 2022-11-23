@@ -5,20 +5,19 @@ import {
   DiffProps as GenericDiffProps,
   DiffTooltip,
   getAnnotationAtPath,
-} from 'sanity/_unstable'
+} from '@sanity/field/diff'
 import {GoogleMapsLoadProxy} from '../loader/GoogleMapsLoadProxy'
 import {GoogleMap} from '../map/Map'
 import {Geopoint} from '../types'
 import {GeopointMove} from './GeopointMove'
 import {RootContainer} from './GeopointFieldDiff.styles'
-import {getGeoConfig} from '../global-workaround'
 
 export type DiffProps = GenericDiffProps<ObjectDiff<Geopoint>>
 
 export const GeopointFieldDiff: DiffComponent<ObjectDiff<Geopoint>> = ({diff, schemaType}) => {
   return (
     <RootContainer>
-      <GoogleMapsLoadProxy config={getGeoConfig()}>
+      <GoogleMapsLoadProxy>
         {(api) => <GeopointDiff api={api} diff={diff} schemaType={schemaType} />}
       </GoogleMapsLoadProxy>
     </RootContainer>

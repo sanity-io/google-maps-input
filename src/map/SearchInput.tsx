@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {TextInput} from '@sanity/ui'
 import {WrapperContainer} from './SearchInput.styles'
-
 interface Props {
   api: typeof window.google.maps
   map: google.maps.Map
@@ -32,7 +31,7 @@ export class SearchInput extends React.PureComponent<Props> {
 
     const {api, map} = this.props
     const {Circle, places, event} = api
-    const searchBounds = new Circle({center: map.getCenter(), radius: 100}).getBounds()!
+    const searchBounds = new Circle({center: map.getCenter(), radius: 100}).getBounds()
     this.autoComplete = new places.Autocomplete(input, {
       bounds: searchBounds,
       types: [], // return all kinds of places

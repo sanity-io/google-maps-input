@@ -3,7 +3,7 @@ import {LatLng} from '../types'
 export function latLngAreEqual(
   latLng1: LatLng | google.maps.LatLng,
   latLng2: LatLng | google.maps.LatLng
-): boolean {
+) {
   const lat1 = typeof latLng1.lat === 'function' ? latLng1.lat() : latLng1.lat
   const lng1 = typeof latLng1.lng === 'function' ? latLng1.lng() : latLng1.lng
 

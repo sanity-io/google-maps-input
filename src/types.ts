@@ -1,5 +1,4 @@
-import {DiffComponent, DiffComponentOptions, ObjectDiff} from 'sanity/_unstable'
-import {ObjectSchemaType} from 'sanity'
+import {ObjectSchemaType} from '@sanity/field/diff'
 
 export interface LatLng {
   lat: number
@@ -14,6 +13,4 @@ export interface Geopoint {
   alt?: number
 }
 
-export interface GeopointSchemaType extends ObjectSchemaType {
-  diffComponent?: DiffComponent<ObjectDiff<Geopoint>> | DiffComponentOptions<ObjectDiff<Geopoint>>
-}
+export type GeopointSchemaType = ObjectSchemaType<Geopoint>

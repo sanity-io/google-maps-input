@@ -14,15 +14,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "outDir": "lib",
-    "noImplicitAny": true,
+    "outDir": "dts",
+    // as per studio v2
+    "noImplicitAny": false,
     "sourceMap": false,
     "inlineSourceMap": false,
     "downlevelIteration": true,
-    "declaration": true,
-    "types": [
-      "google.maps"
-    ]
+    "declaration": true
   },
   "include": ["./src"]
 }
