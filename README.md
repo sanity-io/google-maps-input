@@ -6,8 +6,15 @@ Plugin for [Sanity Studio](https://www.sanity.io) providing input handlers for g
 
 In your studio folder, run:
 
+```sh
+yarn add @sanity/google-maps-input@studio-v2
 ```
-sanity install @sanity/google-maps-input
+
+Next, add `"@sanity/google-maps-input"` to `sanity.json` plugins array:
+```json
+"plugins": [
+  "@sanity/google-maps-input"
+]
 ```
 
 Then add a valid [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) into ``./example/config/@sanity/google-maps-input.json``.
