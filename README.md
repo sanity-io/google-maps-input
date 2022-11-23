@@ -1,5 +1,8 @@
 # @sanity/google-maps-input
 
+> This is a **Sanity Studio v2** plugin.
+> For the v3 version, please refer to the [v3-branch](https://github.com/sanity-io/google-maps-input).
+
 Plugin for [Sanity Studio](https://www.sanity.io) providing input handlers for geo-related input types using Google Maps.
 
 ## Installation
