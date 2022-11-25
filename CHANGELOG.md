@@ -5,6 +5,28 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/sanity-io/google-maps-input/compare/v2.35.2...v3.0.0) (2022-11-25)
+
+### ⚠ BREAKING CHANGES
+
+- this version does not work ins Sanity Studio v2
+
+### Features
+
+- initial Sanity Studio v3 release ([2b825ef](https://github.com/sanity-io/google-maps-input/commit/2b825efbad8b4924bd4e9e87d4f5398e3bbda83b))
+
+### Bug Fixes
+
+- compiled for sanity 3.0.0-rc.0 ([455b81c](https://github.com/sanity-io/google-maps-input/commit/455b81cd225634290c8af95f9726cc732db42d58))
+- **deps:** dev-preview.21 ([82ece5d](https://github.com/sanity-io/google-maps-input/commit/82ece5d2171a24ee086364e94f30366c14bbd74d))
+- **deps:** dev-preview.22 ([c637a35](https://github.com/sanity-io/google-maps-input/commit/c637a35b2e5d545e135ccf9e6b91b4092e20ad75))
+- **deps:** pkg-utils & @sanity/plugin-kit ([e1a7053](https://github.com/sanity-io/google-maps-input/commit/e1a70534bd443b15aaf1c182b281085f49892d7c))
+- **deps:** sanity ^3.0.0 (works with rc.3) ([e03c9c9](https://github.com/sanity-io/google-maps-input/commit/e03c9c9f487b1a88b91cd450441a8c487bcacccd))
+- **deps:** sanity 3.0.0-dev-preview.17 and ui 0.38 ([e70074d](https://github.com/sanity-io/google-maps-input/commit/e70074d0e615e04c82e5012613cd00b1186a2216))
+- **deps:** update dependencies (non-major) ([#3](https://github.com/sanity-io/google-maps-input/issues/3)) ([bc361e2](https://github.com/sanity-io/google-maps-input/commit/bc361e25aa75cc7bb0e1c2e22a944586b26b0396))
+- **deps:** updated @sanity/ui ([a84ed1c](https://github.com/sanity-io/google-maps-input/commit/a84ed1ccd7f7ec6673eaf79ad5926bb483f58092))
+- improve peer deps ([5c9c2fc](https://github.com/sanity-io/google-maps-input/commit/5c9c2fcf43e554fb24e3de2549468aa6b4e6360d))
+
 ## [3.0.0-v3-studio.8](https://github.com/sanity-io/google-maps-input/compare/v3.0.0-v3-studio.7...v3.0.0-v3-studio.8) (2022-11-04)
 
 ### Bug Fixes
