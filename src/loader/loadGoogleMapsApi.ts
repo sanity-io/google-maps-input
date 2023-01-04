@@ -1,6 +1,3 @@
-import {Observable, BehaviorSubject} from 'rxjs'
-import {GoogleMapsInputConfig} from '../index'
-
 declare global {
   interface Window {
     gm_authFailure: any
@@ -10,78 +7,57 @@ declare global {
 
 const callbackName = '___sanity_googleMapsApiCallback'
 const authFailureCallbackName = 'gm_authFailure'
-const locale = (typeof window !== 'undefined' && window.navigator.language) || 'en'
 
-export interface LoadingState {
-  loadState: 'loading'
-}
+export class AuthError extends Error {}
 
-export interface LoadedState {
-  loadState: 'loaded'
-  api: typeof window.google.maps
-}
+function _loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
+  return new Promise<typeof window.google.maps>((resolve, reject) => {
+    window[authFailureCallbackName] = () => {
+      reject(new AuthError('Authentication error when loading Google Maps API.'))
+    }
 
-export interface LoadErrorState {
-  loadState: 'loadError'
-  error: Error
-}
+    window[callbackName] = () => {
+      resolve(window.google.maps)
+    }
 
-export interface AuthErrorState {
-  loadState: 'authError'
-}
+    const script = document.createElement('script')
+    script.onerror = (
+      event: Event | string,
+      source?: string,
+      lineno?: number,
+      colno?: number,
+      error?: Error
+    ) => reject(new Error(coeerceError(event, error)))
 
-export type GoogleLoadState = LoadingState | LoadedState | LoadErrorState | AuthErrorState
-
-let subject: BehaviorSubject<GoogleLoadState>
-
-export function loadGoogleMapsApi(config: GoogleMapsInputConfig): Observable<GoogleLoadState> {
-  const selectedLocale = config.defaultLocale || locale || 'en-US'
-
-  if (subject) {
-    return subject
-  }
-
-  subject = new BehaviorSubject<GoogleLoadState>({loadState: 'loading'})
-
-  window[authFailureCallbackName] = () => {
-    delete window[authFailureCallbackName]
-    subject.next({loadState: 'authError'})
-  }
-
-  window[callbackName] = () => {
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.apiKey}&libraries=places&callback=${callbackName}&language=${config.locale}`
+    document.getElementsByTagName('head')[0].appendChild(script)
+  }).finally(() => {
     delete window[callbackName]
-    subject.next({loadState: 'loaded', api: window.google.maps})
-  }
-
-  const script = document.createElement('script')
-  script.onerror = (
-    event: Event | string,
-    source?: string,
-    lineno?: number,
-    colno?: number,
-    error?: Error
-  ) =>
-    subject.next({
-      loadState: 'loadError',
-      error: coeerceError(event, error),
-    } as LoadErrorState)
-
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${config.apiKey}&libraries=places&callback=${callbackName}&language=${selectedLocale}`
-  document.getElementsByTagName('head')[0].appendChild(script)
-
-  return subject
+    delete window[authFailureCallbackName]
+  })
 }
 
-function coeerceError(event: Event | string, error?: Error): Error {
+let memo: Promise<typeof window.google.maps> | null = null
+export function loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
+  if (memo) {
+    return memo
+  }
+  memo = _loadGoogleMapsApi(config)
+  memo.catch(() => {
+    memo = null
+  })
+  return memo
+}
+function coeerceError(event: Event | string, error?: Error): string {
   if (error) {
-    return error
+    return error.message
   }
 
   if (typeof event === 'string') {
-    return new Error(event)
+    return event
   }
 
-  return new Error(isErrorEvent(event) ? event.message : 'Failed to load Google Maps API')
+  return isErrorEvent(event) ? event.message : 'Failed to load Google Maps API'
 }
 
 function isErrorEvent(event: unknown): event is ErrorEvent {

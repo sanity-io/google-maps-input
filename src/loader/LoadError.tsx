@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {Card, Box, Text, Code} from '@sanity/ui'
 
-type Props = {error: Error; isAuthError: false} | {isAuthError: true}
+type Props = {error: {message?: string}; isAuthError: false} | {isAuthError: true}
 
 export function LoadError(props: Props) {
   return (
