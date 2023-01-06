@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/sanity-io/google-maps-input/compare/v3.0.0...v3.0.1) (2023-01-06)
+
+### Bug Fixes
+
+- **deps:** remove rxjs as dependency ([#24](https://github.com/sanity-io/google-maps-input/issues/24)) ([1aa8d20](https://github.com/sanity-io/google-maps-input/commit/1aa8d20fe88c8f9d14bb2ea77d056249ba1fa34b))
+
 ## [3.0.0](https://github.com/sanity-io/google-maps-input/compare/v2.35.2...v3.0.0) (2022-11-25)
 
 ### ⚠ BREAKING CHANGES
