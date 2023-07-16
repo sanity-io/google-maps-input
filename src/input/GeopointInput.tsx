@@ -159,6 +159,7 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
                     onChange={readOnly ? undefined : this.handleChange}
                     defaultLocation={config.defaultLocation}
                     defaultZoom={config.defaultZoom}
+                    drawPolygon={config.drawPolygon || false}
                   />
                 )}
               </GoogleMapsLoadProxy>

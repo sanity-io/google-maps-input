@@ -23,13 +23,17 @@ type LoadState =
       error: {type: 'loadError' | 'authError'; message: string}
     }
 
-function useLoadGoogleMapsApi(config: {defaultLocale?: string; apiKey: string}): LoadState {
+function useLoadGoogleMapsApi(config: {
+  defaultLocale?: string
+  apiKey: string
+  drawPolygon: boolean
+}): LoadState {
   const locale = config.defaultLocale || browserLocale || 'en-US'
 
   const [state, setState] = useState<LoadState>({type: 'loading'})
 
   useEffect(() => {
-    loadGoogleMapsApi({locale, apiKey: config.apiKey}).then(
+    loadGoogleMapsApi({locale, apiKey: config.apiKey, drawPolygon: config.drawPolygon}).then(
       (api) => setState({type: 'loaded', api}),
       (err) =>
         setState({
@@ -37,12 +41,15 @@ function useLoadGoogleMapsApi(config: {defaultLocale?: string; apiKey: string}):
           error: {type: err instanceof AuthError ? 'authError' : 'loadError', message: err.message},
         })
     )
-  }, [locale, config.apiKey])
+  }, [locale, config.apiKey, config.drawPolygon])
   return state
 }
 
 export function GoogleMapsLoadProxy(props: LoadProps) {
-  const loadState = useLoadGoogleMapsApi(props.config)
+  const loadState = useLoadGoogleMapsApi({
+    ...props.config,
+    drawPolygon: props.config.drawPolygon || false,
+  })
   switch (loadState.type) {
     case 'error':
       return (

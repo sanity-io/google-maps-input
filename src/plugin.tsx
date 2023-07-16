@@ -12,6 +12,7 @@ export interface GoogleMapsInputConfig {
     lat: number
     lng: number
   }
+  drawPolygon?: boolean
 }
 
 export const googleMapsInput = definePlugin<GoogleMapsInputConfig>((config) => {

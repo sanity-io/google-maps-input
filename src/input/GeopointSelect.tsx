@@ -12,6 +12,7 @@ interface SelectProps {
   onChange?: (latLng: google.maps.LatLng) => void
   defaultLocation?: LatLng
   defaultZoom?: number
+  drawPolygon?: boolean
 }
 
 export class GeopointSelect extends React.PureComponent<SelectProps> {
@@ -51,13 +52,14 @@ export class GeopointSelect extends React.PureComponent<SelectProps> {
   }
 
   render() {
-    const {api, defaultZoom, value, onChange} = this.props
+    const {api, defaultZoom, value, onChange, drawPolygon} = this.props
     return (
       <GoogleMap
         api={api}
         location={this.getCenter()}
         onClick={this.handleMapClick}
         defaultZoom={defaultZoom}
+        drawPolygon={drawPolygon}
       >
         {(map) => (
           <>

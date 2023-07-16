@@ -10,7 +10,7 @@ const authFailureCallbackName = 'gm_authFailure'
 
 export class AuthError extends Error {}
 
-function _loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
+function _loadGoogleMapsApi(config: {locale: string; apiKey: string; drawPolygon: boolean}) {
   return new Promise<typeof window.google.maps>((resolve, reject) => {
     window[authFailureCallbackName] = () => {
       reject(new AuthError('Authentication error when loading Google Maps API.'))
@@ -29,7 +29,9 @@ function _loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
       error?: Error
     ) => reject(new Error(coeerceError(event, error)))
 
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.apiKey}&libraries=places&callback=${callbackName}&language=${config.locale}`
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.apiKey}&libraries=places${
+      config.drawPolygon ? ',drawing' : ''
+    }&callback=${callbackName}&language=${config.locale}`
     document.getElementsByTagName('head')[0].appendChild(script)
   }).finally(() => {
     delete window[callbackName]
@@ -38,7 +40,7 @@ function _loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
 }
 
 let memo: Promise<typeof window.google.maps> | null = null
-export function loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
+export function loadGoogleMapsApi(config: {locale: string; apiKey: string; drawPolygon: boolean}) {
   if (memo) {
     return memo
   }
