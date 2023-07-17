@@ -2,7 +2,7 @@ import React from 'react'
 import {uniqueId} from 'lodash'
 import {Box, Button, Dialog, Grid} from '@sanity/ui'
 import {EditIcon, TrashIcon} from '@sanity/icons'
-import {ObjectInputProps, set, setIfMissing, unset, ChangeIndicator} from 'sanity'
+import {ObjectInputProps, set, setIfMissing, unset, ChangeIndicator, insert} from 'sanity'
 import {GoogleMapsLoadProxy} from '../loader/GoogleMapsLoadProxy'
 import {Geopoint, GeopointSchemaType, LatLng} from '../types'
 import {GeopointSelect} from './GeopointSelect'
@@ -10,16 +10,32 @@ import {DialogInnerContainer, PreviewImage} from './GeopointInput.styles'
 import {GoogleMapsInputConfig} from '../index'
 import {getGeoConfig} from '../global-workaround'
 
-const getStaticImageUrl = (value: LatLng, apiKey: string) => {
-  const loc = `${value.lat},${value.lng}`
+const getStaticImageUrl = (value: LatLng | LatLng[], apiKey: string) => {
+  let center
+  const loc = Array.isArray(value)
+    ? `fillcolor:0xFFFF0033|${value.map((v) => `${v.lat},${v.lng}`).join('|')}|${value[0].lat},${
+        value[0].lng
+      }`
+    : `${value.lat},${value.lng}`
+
+  if (!Array.isArray(value)) {
+    center = loc
+  }
+
   const params = {
     key: apiKey,
-    center: loc,
-    markers: loc,
-    zoom: 13,
     scale: 2,
     size: '640x300',
-  } as const
+    center,
+  } as any
+
+  if (Array.isArray(value)) {
+    params.path = loc
+  } else {
+    params.markers = loc
+    params.zoom = 13
+  }
+
   const qs = Object.keys(params).reduce((res, param) => {
     return res.concat(`${param}=${encodeURIComponent(params[param as keyof typeof params])}`)
   }, [] as string[])
@@ -29,6 +45,7 @@ const getStaticImageUrl = (value: LatLng, apiKey: string) => {
 
 export type GeopointInputProps = ObjectInputProps<Geopoint, GeopointSchemaType> & {
   geoConfig: GoogleMapsInputConfig
+  drawPolygon?: boolean
 }
 
 type Focusable = any
@@ -68,8 +85,24 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
     this.setState({modalOpen: false})
   }
 
-  handleChange = (latLng: google.maps.LatLng) => {
-    const {schemaType, onChange} = this.props
+  handleChange = (latLng: google.maps.LatLng | google.maps.LatLng[]) => {
+    const {schemaType, onChange, id} = this.props
+    if (Array.isArray(latLng)) {
+      onChange([
+        setIfMissing({
+          _type: schemaType.name,
+        }),
+        set(
+          latLng.map((v, i) => ({
+            lat: v.lat(),
+            lng: v.lng(),
+            _key: i + 1,
+          }))
+        ),
+      ])
+      return
+    }
+
     onChange([
       setIfMissing({
         _type: schemaType.name,
@@ -160,6 +193,7 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
                     defaultLocation={config.defaultLocation}
                     defaultZoom={config.defaultZoom}
                     drawPolygon={config.drawPolygon || false}
+                    handleClear={this.handleClear}
                   />
                 )}
               </GoogleMapsLoadProxy>

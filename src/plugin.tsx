@@ -22,9 +22,13 @@ export const googleMapsInput = definePlugin<GoogleMapsInputConfig>((config) => {
     form: {
       components: {
         input(props) {
-          if (isGeopoint(props.schemaType)) {
+          const isPolygon =
+            props.schemaType.jsonType === 'array' && props.schemaType.of[0].name === 'geopoint'
+          if (isGeopoint(props.schemaType) || isPolygon) {
             const castedProps = props as unknown as Omit<GeopointInputProps, 'geoConfig'>
-            return <GeopointInput {...castedProps} geoConfig={config} />
+            return (
+              <GeopointInput {...castedProps} geoConfig={config} drawPolygon={config.drawPolygon} />
+            )
           }
           return props.renderDefault(props)
         },

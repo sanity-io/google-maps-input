@@ -12,3 +12,25 @@ export function latLngAreEqual(
 
   return lat1 === lat2 && lng1 === lng2
 }
+
+export function getPolyCenter(coords: LatLng[]): google.maps.LatLng {
+  const bounds = new google.maps.LatLngBounds()
+  let i
+
+  for (i = 0; i < coords.length; i++) {
+    bounds.extend(coords[i])
+  }
+
+  return bounds.getCenter()
+}
+
+export function getPolyBounds(coords: LatLng[]): google.maps.LatLngBounds {
+  const bounds = new google.maps.LatLngBounds()
+  let i
+
+  for (i = 0; i < coords.length; i++) {
+    bounds.extend(coords[i])
+  }
+
+  return bounds
+}

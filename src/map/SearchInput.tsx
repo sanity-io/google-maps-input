@@ -32,13 +32,19 @@ export class SearchInput extends React.PureComponent<Props> {
 
     const {api, map} = this.props
     const {Circle, places, event} = api
-    const searchBounds = new Circle({center: map.getCenter(), radius: 100}).getBounds()!
+    const searchBounds = new Circle({center: map.getCenter(), radius: 1000}).getBounds()!
     this.autoComplete = new places.Autocomplete(input, {
       bounds: searchBounds,
       types: [], // return all kinds of places
     })
 
-    event.addListener(this.autoComplete, 'place_changed', this.handleChange)
+    event.addListener(this.autoComplete, 'place_changed', () => {
+      const place = this.autoComplete?.getPlace()
+      if (!place?.geometry?.location || !place.geometry.viewport) return
+
+      map.fitBounds(place.geometry.viewport)
+      map.panTo(place.geometry.location)
+    })
   }
 
   render() {

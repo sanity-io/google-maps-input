@@ -1,8 +1,8 @@
 import React from 'react'
-import {LatLng} from '../types'
-import {latLngAreEqual} from './util'
+import {LatLng, Geopoint} from '../types'
+import {getPolyBounds, latLngAreEqual} from './util'
 import {MapContainer} from './Map.styles'
-import {waitForTheElement} from 'wait-for-the-element'
+// import {waitForTheElement} from 'wait-for-the-element'
 
 interface MapProps {
   api: typeof window.google.maps
@@ -14,7 +14,10 @@ interface MapProps {
   scrollWheel?: boolean
   controlSize?: number
   onClick?: (event: google.maps.MapMouseEvent) => void
+  handleClear?: () => void
+  handlePolygonDraw?: (geoPoint: google.maps.LatLng[]) => void
   children?: (map: google.maps.Map) => React.ReactElement
+  value?: Geopoint | Geopoint[]
 }
 
 interface MapState {
@@ -68,7 +71,26 @@ export class GoogleMap extends React.PureComponent<MapProps, MapState> {
       return
     }
 
-    const {onClick, location, bounds} = this.props
+    const {onClick, location, bounds, value, drawPolygon} = this.props
+
+    if (drawPolygon) {
+      if (!Array.isArray(value) || this.state.polygon) return
+      const polygon = new google.maps.Polygon({
+        paths: value,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+      })
+      polygon.setMap(map)
+      this.setState((state) => ({
+        ...state,
+        polygon,
+      }))
+
+      map.fitBounds(getPolyBounds(value))
+    }
 
     if (prevProps.onClick !== onClick) {
       this.attachClickHandler()
@@ -97,10 +119,13 @@ export class GoogleMap extends React.PureComponent<MapProps, MapState> {
   async deletePolygon() {
     this.state.polygon?.setMap(null)
     this.setState((state) => ({...state, polygon: undefined}))
+    this.props.handleClear && this.props.handleClear()
   }
 
   async addDeleteControl(api: typeof window.google.maps, map: google.maps.Map) {
-    const dragButton = await waitForTheElement('[role="menuitemradio"]:not([id])')
+    // const dragButton = await waitForTheElement('[role="menuitemradio"]:not([id])')
+    await new Promise((r) => setTimeout(r, 2000))
+    const dragButton = document.querySelector('[role="menuitemradio"]:not([id])')
     const menuBar = dragButton?.parentElement?.parentElement as HTMLDivElement
     if (!menuBar) return
 
@@ -147,6 +172,14 @@ export class GoogleMap extends React.PureComponent<MapProps, MapState> {
         }
         // @ts-ignore
         this.setState((state) => ({...state, polygon: e.overlay}))
+
+        if (this.props.handlePolygonDraw) {
+          // @ts-ignore
+          e.overlay.getPaths().forEach((p) => {
+            // @ts-ignore
+            this.props.handlePolygonDraw(p.getArray())
+          })
+        }
       }
     )
 
