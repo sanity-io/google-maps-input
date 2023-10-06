@@ -12,6 +12,7 @@ export interface Geopoint {
   lat: number
   lng: number
   alt?: number
+  zoom?: number
 }
 
 export interface GeopointSchemaType extends ObjectSchemaType {

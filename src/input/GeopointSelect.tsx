@@ -10,6 +10,7 @@ interface SelectProps {
   api: typeof window.google.maps
   value?: Geopoint
   onChange?: (latLng: google.maps.LatLng) => void
+  onZoomChange?: (zoom: number) => void
   defaultLocation?: LatLng
   defaultZoom?: number
 }
@@ -44,9 +45,19 @@ export class GeopointSelect extends React.PureComponent<SelectProps> {
     if (event.latLng) this.setValue(event.latLng)
   }
 
+  handleZoomChange = (zoom: number) => {
+    this.setZoom(zoom)
+  }
+
   setValue(geoPoint: google.maps.LatLng) {
     if (this.props.onChange) {
       this.props.onChange(geoPoint)
+    }
+  }
+
+  setZoom(zoom: number) {
+    if (this.props.onZoomChange) {
+      this.props.onZoomChange(zoom)
     }
   }
 
@@ -57,6 +68,7 @@ export class GeopointSelect extends React.PureComponent<SelectProps> {
         api={api}
         location={this.getCenter()}
         onClick={this.handleMapClick}
+        onZoomChange={this.handleZoomChange}
         defaultZoom={defaultZoom}
       >
         {(map) => (
