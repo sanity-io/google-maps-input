@@ -8,6 +8,7 @@ export interface GoogleMapsInputConfig {
   apiKey: string
   defaultZoom?: number
   defaultLocale?: string
+  saveZoom?: boolean
   defaultLocation?: {
     lat: number
     lng: number
