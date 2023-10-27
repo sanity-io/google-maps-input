@@ -1,9 +1,10 @@
 # @sanity/google-maps-input
 
->T his is a **Sanity Studio v3** plugin.
+> T his is a **Sanity Studio v3** plugin.
 > For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/google-maps-input/tree/studio-v2).
 
-## What is it? 
+## What is it?
+
 Plugin for [Sanity Studio](https://www.sanity.io) providing input handlers for geo-related input types using Google Maps.
 
 This plugin will replace the default `geopoint` input component.
@@ -12,7 +13,7 @@ This plugin will replace the default `geopoint` input component.
 
 ## Know issues in Studio V3
 
-* Diff-preview is not implemented.
+- Diff-preview is not implemented.
 
 These will be re-added well before Studio V3 GA.
 
@@ -35,23 +36,25 @@ yarn add @sanity/google-maps-input
 Add it as a plugin in sanity.config.ts (or .js), with a valid [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key):
 
 ```js
-import { googleMapsInput } from "@sanity/google-maps-input";
+import {googleMapsInput} from '@sanity/google-maps-input'
 
 export default defineConfig({
   // ...
   plugins: [
-      googleMapsInput({
-          apiKey: "my-api-key"
-     })
-  ] 
+    googleMapsInput({
+      apiKey: 'my-api-key',
+    }),
+  ],
 })
 ```
-Ensure that the key has access to:
-* Google Maps JavaScript API
-* Google Places API Web Service
-* Google Static Maps API
 
-And that the key allows web-access from the Studio URL(s) you are using the plugin in. 
+Ensure that the key has access to:
+
+- Google Maps JavaScript API
+- Google Places API Web Service
+- Google Static Maps API
+
+And that the key allows web-access from the Studio URL(s) you are using the plugin in.
 
 Note: This plugin will replace the default `geopoint` input component.
 

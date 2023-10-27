@@ -4,10 +4,10 @@ name: CI & Release
 # Workflow name based on selected inputs. Fallback to default Github naming when expression evaluates to empty string
 run-name: >-
   ${{
-    inputs.release && inputs.test && 'Build ➤ Test ➤ Publish to NPM' ||
-    inputs.release && !inputs.test && 'Build ➤ Skip Tests ➤ Publish to NPM' ||
-    github.event_name == 'workflow_dispatch' && inputs.test && 'Build ➤ Test' ||
-    github.event_name == 'workflow_dispatch' && !inputs.test && 'Build ➤ Skip Tests' ||
+    inputs.release && inputs.test && format('Build {0} ➤ Test ➤ Publish to NPM', github.ref_name)  ||
+    inputs.release && !inputs.test && format('Build {0} ➤ Skip Tests ➤ Publish to NPM', github.ref_name) ||
+    github.event_name == 'workflow_dispatch' && inputs.test && format('Build {0} ➤ Test', github.ref_name) ||
+    github.event_name == 'workflow_dispatch' && !inputs.test && format('Build {0} ➤ Skip Tests', github.ref_name) ||
     ''
   }}
 
@@ -51,8 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Lint & Build
     steps:
-      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
-      - uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           cache: npm
           node-version: lts/*
@@ -78,10 +78,9 @@ jobs:
         node: [lts/*]
         # It makes sense to also test the oldest, and latest, versions of Node.js, on ubuntu-only since it's the fastest CI runner
         include:
-# disable for now
-#          - os: ubuntu-latest
-#            # Test the oldest LTS release of Node that's still receiving bugfixes and security patches, versions older than that have reached End-of-Life
-#            node: lts/-2
+          - os: ubuntu-latest
+            # Test the oldest LTS release of Node that's still receiving bugfixes and security patches, versions older than that have reached End-of-Life
+            node: lts/-2
           - os: ubuntu-latest
             # Test the actively developed version that will become the latest LTS release next October
             node: current
@@ -92,8 +91,8 @@ jobs:
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
-      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
-      - uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           cache: npm
           node-version: ${{ matrix.node }}
@@ -107,7 +106,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Semantic release
     steps:
-      - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
+      - uses: actions/checkout@v4
         with:
           # Need to fetch entire commit history to
           # analyze every commit since last release

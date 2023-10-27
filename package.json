@@ -23,34 +23,37 @@
   "author": "Sanity.io <hello@sanity.io>",
   "exports": {
     ".": {
-      "types": "./lib/src/index.d.ts",
+      "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "import": "./lib/index.esm.js",
-      "require": "./lib/index.js",
-      "default": "./lib/index.esm.js"
+      "require": "./dist/index.js",
+      "node": {
+        "module": "./dist/index.esm.js",
+        "import": "./dist/index.cjs.mjs"
+      },
+      "import": "./dist/index.esm.js",
+      "default": "./dist/index.esm.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./lib/index.js",
-  "module": "./lib/index.esm.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
   "source": "./src/index.ts",
-  "types": "./lib/src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
+    "dist",
+    "sanity.json",
     "src",
-    "lib",
-    "v2-incompatible.js",
-    "sanity.json"
+    "v2-incompatible.js"
   ],
   "scripts": {
-    "prebuild": "npm run clean && plugin-kit verify-package --silent && pkg-utils",
-    "build": "pkg-utils build --strict",
-    "clean": "rimraf lib",
-    "compile": "tsc --noEmit",
+    "build": "run-s clean && plugin-kit verify-package --silent && pkg-utils build --strict && pkg-utils --strict",
+    "clean": "rimraf dist",
+    "format": "prettier --write --cache --ignore-unknown .",
     "link-watch": "plugin-kit link-watch",
     "lint": "eslint .",
-    "prepare": "husky install",
-    "prepublishOnly": "npm run build",
-    "watch": "pkg-utils watch"
+    "prepublishOnly": "run-s build",
+    "watch": "pkg-utils watch --strict",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@sanity/icons": "^2.0.0",
@@ -59,37 +62,39 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.2.0",
-    "@commitlint/config-conventional": "^17.2.0",
-    "@sanity/pkg-utils": "^1.17.2",
-    "@sanity/plugin-kit": "^2.1.5",
-    "@sanity/semantic-release-preset": "^4.0.0",
-    "@types/google.maps": "^3.49.2",
-    "@types/styled-components": "^5.1.25",
-    "@typescript-eslint/eslint-plugin": "^5.42.0",
-    "@typescript-eslint/parser": "^5.42.0",
-    "eslint": "^8.26.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@sanity/pkg-utils": "^2.4.8",
+    "@sanity/plugin-kit": "^3.1.10",
+    "@sanity/semantic-release-preset": "^4.1.4",
+    "@types/google.maps": "^3.54.5",
+    "@types/react": "^18.2.21",
+    "@types/styled-components": "^5.1.29",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-config-sanity": "^6.0.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "prettier-plugin-packagejson": "^2.3.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "rimraf": "^3.0.2",
-    "sanity": "^3.0.0",
-    "styled-components": "^5.2.0",
-    "typescript": "^5.0.0"
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.3",
+    "prettier-plugin-packagejson": "^2.4.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "rimraf": "^5.0.1",
+    "sanity": "^3.16.1",
+    "semantic-release": "^21.1.1",
+    "styled-components": "^5.3.11",
+    "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "react": "^18",
-    "react-dom": "^18",
-    "sanity": "^3.0.0",
-    "styled-components": "^5.2"
+    "sanity": "^3.14"
   },
   "engines": {
     "node": ">=14"
@@ -99,9 +104,7 @@
       "global": "google"
     }
   },
-  "sanityPlugin": {
-    "upgradeHelp": {
-      "sanityJson": false
-    }
+  "publishConfig": {
+    "access": "public"
   }
 }

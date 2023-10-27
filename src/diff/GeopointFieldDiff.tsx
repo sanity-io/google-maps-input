@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   DiffComponent,
   ObjectDiff,
@@ -15,7 +14,10 @@ import {getGeoConfig} from '../global-workaround'
 
 export type DiffProps = GenericDiffProps<ObjectDiff<Geopoint>>
 
-export const GeopointFieldDiff: DiffComponent<ObjectDiff<Geopoint>> = ({diff, schemaType}) => {
+export const GeopointFieldDiff: DiffComponent<ObjectDiff<Geopoint>> = ({
+  diff,
+  schemaType,
+}: DiffProps) => {
   return (
     <RootContainer>
       <GoogleMapsLoadProxy config={getGeoConfig()}>
@@ -56,14 +58,14 @@ function GeopointDiff({api, diff}: DiffProps & {api: typeof window.google.maps})
 function getBounds(
   fromValue: google.maps.LatLngLiteral,
   toValue: google.maps.LatLngLiteral,
-  api: typeof window.google.maps
+  api: typeof window.google.maps,
 ): google.maps.LatLngBounds {
   return new api.LatLngBounds().extend(fromValue).extend(toValue)
 }
 
 function getCenter(
   diff: DiffProps['diff'],
-  api: typeof window.google.maps
+  api: typeof window.google.maps,
 ): google.maps.LatLngLiteral {
   const {fromValue, toValue} = diff
   if (fromValue && toValue) {
