@@ -1,4 +1,5 @@
 declare global {
+  // eslint-disable-next-line
   interface Window {
     gm_authFailure: any
     ___sanity_googleMapsApiCallback: any
@@ -26,7 +27,7 @@ function _loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
       source?: string,
       lineno?: number,
       colno?: number,
-      error?: Error
+      error?: Error,
     ) => reject(new Error(coeerceError(event, error)))
 
     script.src = `https://maps.googleapis.com/maps/api/js?key=${config.apiKey}&libraries=places&callback=${callbackName}&language=${config.locale}`
@@ -38,7 +39,10 @@ function _loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
 }
 
 let memo: Promise<typeof window.google.maps> | null = null
-export function loadGoogleMapsApi(config: {locale: string; apiKey: string}) {
+export function loadGoogleMapsApi(config: {
+  locale: string
+  apiKey: string
+}): Promise<typeof window.google.maps> {
   if (memo) {
     return memo
   }

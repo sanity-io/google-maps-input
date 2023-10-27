@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {ArrayDiff, ObjectDiff, Diff, DiffProps as GenericDiffProps, DiffComponent} from 'sanity'
 import {GoogleMapsLoadProxy} from '../loader/GoogleMapsLoadProxy'
 import {GoogleMap} from '../map/Map'
@@ -9,7 +8,10 @@ import {getGeoConfig} from '../global-workaround'
 
 export type DiffProps = GenericDiffProps<ArrayDiff<Geopoint>>
 
-export const GeopointArrayDiff: DiffComponent<ArrayDiff<Geopoint>> = ({diff, schemaType}) => {
+export const GeopointArrayDiff: DiffComponent<ArrayDiff<Geopoint>> = ({
+  diff,
+  schemaType,
+}: DiffProps) => {
   return (
     <RootContainer>
       <GoogleMapsLoadProxy config={getGeoConfig()}>
@@ -69,7 +71,7 @@ function hasCoordinates(point: Partial<Geopoint>): point is Geopoint {
 function getBounds(
   fromValue: google.maps.LatLngLiteral[] | null | undefined,
   toValue: google.maps.LatLngLiteral[] | null | undefined,
-  api: typeof window.google.maps
+  api: typeof window.google.maps,
 ): google.maps.LatLngBounds {
   const bounds = new api.LatLngBounds()
   const points = [...(fromValue || []), ...(toValue || [])]

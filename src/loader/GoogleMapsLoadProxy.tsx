@@ -35,7 +35,7 @@ function useLoadGoogleMapsApi(config: {defaultLocale?: string; apiKey: string}):
         setState({
           type: 'error',
           error: {type: err instanceof AuthError ? 'authError' : 'loadError', message: err.message},
-        })
+        }),
     )
   }, [locale, config.apiKey])
   return state
