@@ -1,6 +1,6 @@
 import React from 'react'
 import {uniqueId} from 'lodash'
-import {Box, Button, Dialog, Grid} from '@sanity/ui'
+import {Box, Button, Dialog, Grid, Stack} from '@sanity/ui'
 import {EditIcon, TrashIcon} from '@sanity/icons'
 import {ObjectInputProps, set, setIfMissing, unset, ChangeIndicator} from 'sanity'
 import {GoogleMapsLoadProxy} from '../loader/GoogleMapsLoadProxy'
@@ -110,38 +110,38 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
     }
 
     return (
-      <>
+      <Stack space={3}>
         {value && (
           <ChangeIndicator path={path} isChanged={changed} hasFocus={!!focused}>
             <PreviewImage src={getStaticImageUrl(value, config.apiKey)} alt="Map location" />
           </ChangeIndicator>
         )}
 
-        {!readOnly && (
-          <Box marginTop={4}>
-            <Grid columns={2} gap={2}>
-              <Button
-                mode="ghost"
-                icon={value && EditIcon}
-                padding={3}
-                ref={this.setEditButton}
-                text={value ? 'Edit' : 'Set location'}
-                onClick={this.handleToggleModal}
-              />
+        <Box>
+          <Grid columns={value ? 2 : 1} gap={3}>
+            <Button
+              mode="ghost"
+              icon={value && EditIcon}
+              padding={3}
+              ref={this.setEditButton}
+              text={value ? 'Edit' : 'Set location'}
+              onClick={this.handleToggleModal}
+              disabled={readOnly}
+            />
 
-              {value && (
-                <Button
-                  tone="critical"
-                  icon={TrashIcon}
-                  padding={3}
-                  mode="ghost"
-                  text={'Remove'}
-                  onClick={this.handleClear}
-                />
-              )}
-            </Grid>
-          </Box>
-        )}
+            {value && (
+              <Button
+                tone="critical"
+                icon={TrashIcon}
+                padding={3}
+                mode="ghost"
+                text={'Remove'}
+                onClick={this.handleClear}
+                disabled={readOnly}
+              />
+            )}
+          </Grid>
+        </Box>
 
         {modalOpen && (
           <Dialog
@@ -165,7 +165,7 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
             </DialogInnerContainer>
           </Dialog>
         )}
-      </>
+      </Stack>
     )
   }
 }
