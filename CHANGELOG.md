@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/sanity-io/google-maps-input/compare/v3.0.1...v3.0.2) (2023-10-27)
+
+### Bug Fixes
+
+- readme ([#56](https://github.com/sanity-io/google-maps-input/issues/56)) ([f498f06](https://github.com/sanity-io/google-maps-input/commit/f498f06195327d974dc7d9b4ddbfafed4a22fd6b))
+- Update pkg-utils, plugin-kit, small UI tweaks ([#55](https://github.com/sanity-io/google-maps-input/issues/55)) ([67df7a7](https://github.com/sanity-io/google-maps-input/commit/67df7a75f72996de6fd9654b9a461aeadde4e625))
+
 ## [3.0.1](https://github.com/sanity-io/google-maps-input/compare/v3.0.0...v3.0.1) (2023-01-06)
 
 ### Bug Fixes
