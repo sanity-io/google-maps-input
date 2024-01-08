@@ -89,7 +89,7 @@
     "rimraf": "^5.0.1",
     "sanity": "^3.16.1",
     "semantic-release": "^21.1.1",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.1.8",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
