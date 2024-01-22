@@ -58,7 +58,7 @@
   "dependencies": {
     "@sanity/icons": "^2.0.0",
     "@sanity/incompatible-plugin": "^1.0.4",
-    "@sanity/ui": "^1.0.0",
+    "@sanity/ui": "^2.0.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
