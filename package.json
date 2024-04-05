@@ -69,7 +69,6 @@
     "@sanity/semantic-release-preset": "^4.1.4",
     "@types/google.maps": "^3.54.5",
     "@types/react": "^18.2.21",
-    "@types/styled-components": "^5.1.29",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "eslint": "^8.48.0",
