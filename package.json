@@ -58,7 +58,7 @@
   "dependencies": {
     "@sanity/icons": "^2.0.0",
     "@sanity/incompatible-plugin": "^1.0.4",
-    "@sanity/ui": "^1.0.0",
+    "@sanity/ui": "^2.0.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -89,12 +89,13 @@
     "rimraf": "^5.0.1",
     "sanity": "^3.16.1",
     "semantic-release": "^21.1.1",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.1.8",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "react": "^18",
-    "sanity": "^3.14"
+    "sanity": "^3.14",
+    "styled-components": "6.1"
   },
   "engines": {
     "node": ">=14"
