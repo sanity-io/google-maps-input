@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/sanity-io/google-maps-input/compare/v3.0.2...v4.0.0) (2024-04-08)
+
+### ⚠ BREAKING CHANGES
+
+- **deps:** Requires sanity@>=3.19.0 installed as a peer dependency
+
+### Bug Fixes
+
+- **deps:** require sanity >=3.19.0 ([#69](https://github.com/sanity-io/google-maps-input/issues/69)) ([ef97355](https://github.com/sanity-io/google-maps-input/commit/ef973556c470e32a272d0aeace8c4e00954bfc00))
+- **deps:** upgrade @sanity/ui and require styled-components v6 as peer dependency ([#68](https://github.com/sanity-io/google-maps-input/issues/68)) ([5cea2c9](https://github.com/sanity-io/google-maps-input/commit/5cea2c9854fa024c2f3c421bdc058216fffe7940))
+
 ## [3.0.2](https://github.com/sanity-io/google-maps-input/compare/v3.0.1...v3.0.2) (2023-10-27)
 
 ### Bug Fixes
