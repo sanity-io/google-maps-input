@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/sanity-io/google-maps-input/compare/v4.0.0...v4.0.1) (2024-04-09)
+
+### Bug Fixes
+
+- **deps:** use caret for styled-components peer dependency ([#70](https://github.com/sanity-io/google-maps-input/issues/70)) ([4b38112](https://github.com/sanity-io/google-maps-input/commit/4b381121d4d9a325480c1c77fabfab5fdb3e0990))
+
 ## [4.0.0](https://github.com/sanity-io/google-maps-input/compare/v3.0.2...v4.0.0) (2024-04-08)
 
 ### ⚠ BREAKING CHANGES
