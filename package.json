@@ -94,7 +94,7 @@
   "peerDependencies": {
     "react": "^18",
     "sanity": "^3.19.0",
-    "styled-components": "6.1"
+    "styled-components": "^6.1"
   },
   "engines": {
     "node": ">=14"
