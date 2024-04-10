@@ -10,13 +10,13 @@ import {DialogInnerContainer, PreviewImage} from './GeopointInput.styles'
 import {GoogleMapsInputConfig} from '../index'
 import {getGeoConfig} from '../global-workaround'
 
-const getStaticImageUrl = (value: LatLng, apiKey: string) => {
+const getStaticImageUrl = (value: LatLng, apiKey: string, zoom?: number) => {
   const loc = `${value.lat},${value.lng}`
   const params = {
     key: apiKey,
     center: loc,
     markers: loc,
-    zoom: 13,
+    zoom: zoom || 13,
     scale: 2,
     size: '640x300',
   } as const
@@ -79,6 +79,16 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
     ])
   }
 
+  handleZoomChange = (zoom: number) => {
+    const {schemaType, onChange} = this.props
+    onChange([
+      setIfMissing({
+        _type: schemaType.name,
+      }),
+      set(zoom, ['zoom']),
+    ])
+  }
+
   handleClear = () => {
     const {onChange} = this.props
     onChange(unset())
@@ -113,7 +123,10 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
       <Stack space={3}>
         {value && (
           <ChangeIndicator path={path} isChanged={changed} hasFocus={!!focused}>
-            <PreviewImage src={getStaticImageUrl(value, config.apiKey)} alt="Map location" />
+            <PreviewImage
+              src={getStaticImageUrl(value, config.apiKey, value.zoom)}
+              alt="Map location"
+            />
           </ChangeIndicator>
         )}
 
@@ -157,8 +170,9 @@ class GeopointInput extends React.PureComponent<GeopointInputProps, InputState> 
                     api={api}
                     value={value || undefined}
                     onChange={readOnly ? undefined : this.handleChange}
+                    onZoomChange={readOnly || !config.saveZoom ? undefined : this.handleZoomChange}
                     defaultLocation={config.defaultLocation}
-                    defaultZoom={config.defaultZoom}
+                    defaultZoom={value?.zoom || config.defaultZoom}
                   />
                 )}
               </GoogleMapsLoadProxy>
