@@ -64,7 +64,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",
-    "@sanity/pkg-utils": "^2.4.10",
+    "@sanity/pkg-utils": "^4.4.4",
     "@sanity/plugin-kit": "^3.1.10",
     "@sanity/semantic-release-preset": "^4.1.7",
     "@types/google.maps": "^3.55.7",
