@@ -87,7 +87,7 @@
     "react-is": "^18.2.0",
     "rimraf": "^5.0.1",
     "sanity": "^3.37.2",
-    "semantic-release": "^21.1.2",
+    "semantic-release": "^22.0.12",
     "styled-components": "^6.1.8",
     "typescript": "^5.4.2"
   },
