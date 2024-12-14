@@ -1,22 +1,22 @@
-import * as React from 'react'
-import {useUserColor, ObjectDiff} from 'sanity'
+import {useRef} from 'react'
+import {useUserColor, type ObjectDiff} from 'sanity'
 import {Marker} from '../map/Marker'
 import {Arrow} from '../map/Arrow'
-import {Geopoint} from '../types'
+import type {Geopoint} from '../types'
 
-interface Props {
+interface GeopointMoveProps {
   api: typeof window.google.maps
   map: google.maps.Map
   diff: ObjectDiff<Geopoint>
   label?: string
 }
 
-export function GeopointMove({diff, api, map, label}: Props) {
+export function GeopointMove({diff, api, map, label}: GeopointMoveProps) {
   const {fromValue: from, toValue: to} = diff
   const annotation = diff.isChanged ? diff.annotation : undefined
   const userColor = useUserColor(annotation ? annotation.author : null) || undefined
-  const fromRef = React.useRef<google.maps.Marker>()
-  const toRef = React.useRef<google.maps.Marker>()
+  const fromRef = useRef<google.maps.Marker>()
+  const toRef = useRef<google.maps.Marker>()
 
   return (
     <>

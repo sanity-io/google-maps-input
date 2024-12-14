@@ -1,5 +1,5 @@
-import * as React from 'react'
-import {LatLng} from '../types'
+import {type MutableRefObject, PureComponent} from 'react'
+import type {LatLng} from '../types'
 import {latLngAreEqual} from './util'
 
 interface Props {
@@ -9,11 +9,11 @@ interface Props {
   to: LatLng
   color?: {background: string; border: string; text: string}
   zIndex?: number
-  arrowRef?: React.MutableRefObject<google.maps.Polyline | undefined>
+  arrowRef?: MutableRefObject<google.maps.Polyline | undefined>
   onClick?: (event: google.maps.MapMouseEvent) => void
 }
 
-export class Arrow extends React.PureComponent<Props> {
+export class Arrow extends PureComponent<Props> {
   line: google.maps.Polyline | undefined
 
   eventHandlers: {

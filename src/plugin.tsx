@@ -1,18 +1,7 @@
-import React from 'react'
-import {definePlugin, SchemaType} from 'sanity'
-import GeopointInput, {GeopointInputProps} from './input/GeopointInput'
+import {definePlugin, type SchemaType} from 'sanity'
+import {GeopointInput, type GeopointInputProps} from './input/GeopointInput'
 import {setGeoConfig} from './global-workaround'
-import {GeopointSchemaType} from './types'
-
-export interface GoogleMapsInputConfig {
-  apiKey: string
-  defaultZoom?: number
-  defaultLocale?: string
-  defaultLocation?: {
-    lat: number
-    lng: number
-  }
-}
+import type {GeopointSchemaType, GoogleMapsInputConfig} from './types'
 
 export const googleMapsInput = definePlugin<GoogleMapsInputConfig>((config) => {
   setGeoConfig(config)

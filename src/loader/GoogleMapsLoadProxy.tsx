@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import {type ReactElement, useEffect, useState} from 'react'
+import type {GoogleMapsInputConfig} from '../types'
 import {AuthError, loadGoogleMapsApi} from './loadGoogleMapsApi'
 import {LoadError as LoadErrorView} from './LoadError'
-import {GoogleMapsInputConfig} from '../index'
 
 interface LoadProps {
-  children: (api: typeof window.google.maps) => React.ReactElement
+  children: (api: typeof window.google.maps) => ReactElement
   config: GoogleMapsInputConfig
 }
 
@@ -29,6 +29,10 @@ function useLoadGoogleMapsApi(config: {defaultLocale?: string; apiKey: string}):
   const [state, setState] = useState<LoadState>({type: 'loading'})
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
     loadGoogleMapsApi({locale, apiKey: config.apiKey}).then(
       (api) => setState({type: 'loaded', api}),
       (err) =>

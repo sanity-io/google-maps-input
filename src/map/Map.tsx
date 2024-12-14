@@ -1,5 +1,5 @@
-import React from 'react'
-import {LatLng} from '../types'
+import {createRef, PureComponent, type ReactElement} from 'react'
+import type {LatLng} from '../types'
 import {latLngAreEqual} from './util'
 import {MapContainer} from './Map.styles'
 
@@ -12,14 +12,14 @@ interface MapProps {
   scrollWheel?: boolean
   controlSize?: number
   onClick?: (event: google.maps.MapMouseEvent) => void
-  children?: (map: google.maps.Map) => React.ReactElement
+  children?: (map: google.maps.Map) => ReactElement
 }
 
 interface MapState {
   map: google.maps.Map | undefined
 }
 
-export class GoogleMap extends React.PureComponent<MapProps, MapState> {
+export class GoogleMap extends PureComponent<MapProps, MapState> {
   static defaultProps = {
     defaultZoom: 8,
     scrollWheel: true,
@@ -27,7 +27,7 @@ export class GoogleMap extends React.PureComponent<MapProps, MapState> {
 
   state: MapState = {map: undefined}
   clickHandler: google.maps.MapsEventListener | undefined
-  mapRef = React.createRef<HTMLDivElement>()
+  mapRef = createRef<HTMLDivElement>()
   mapEl: HTMLDivElement | null = null
 
   componentDidMount() {

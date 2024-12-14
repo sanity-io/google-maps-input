@@ -58,3 +58,9 @@ yalc.lock
 
 # Compiled plugin
 dist
+
+# Typescript
+tsconfig.tsbuildinfo
+
+# Sanity
+.sanity
