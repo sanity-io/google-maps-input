@@ -1,5 +1,5 @@
-import {DiffComponent, DiffComponentOptions, ObjectDiff} from 'sanity'
-import {ObjectSchemaType} from 'sanity'
+import type {DiffComponent, DiffComponentOptions, ObjectDiff} from 'sanity'
+import type {ObjectSchemaType} from 'sanity'
 
 export interface LatLng {
   lat: number

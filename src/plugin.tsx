@@ -1,8 +1,9 @@
 import React from 'react'
-import {definePlugin, SchemaType} from 'sanity'
-import GeopointInput, {GeopointInputProps} from './input/GeopointInput'
+import {definePlugin, type SchemaType} from 'sanity'
 import {setGeoConfig} from './global-workaround'
-import {GeopointSchemaType} from './types'
+import {i18nBundles} from './i18n/bundles'
+import {GeopointInput, type GeopointInputProps} from './input/GeopointInput'
+import type {GeopointSchemaType} from './types'
 
 export interface GoogleMapsInputConfig {
   apiKey: string
@@ -28,6 +29,9 @@ export const googleMapsInput = definePlugin<GoogleMapsInputConfig>((config) => {
           return props.renderDefault(props)
         },
       },
+    },
+    i18n: {
+      bundles: i18nBundles,
     },
   }
 })
