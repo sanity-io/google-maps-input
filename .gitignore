@@ -64,3 +64,6 @@ tsconfig.tsbuildinfo
 
 # Sanity
 .sanity
+
+# Local env files (eg .env.local)
+*.local

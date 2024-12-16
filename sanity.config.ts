@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
@@ -11,7 +12,7 @@ export default defineConfig({
       structure: (S) => S.documentTypeList('geopointTest'),
     }),
     googleMapsInput({
-      apiKey: 'AIzaSyDDO2FFi5wXaQdk88S1pQUa70bRtWuMhkI',
+      apiKey: import.meta.env.SANITY_STUDIO_GOOGLE_MAPS_API_KEY,
     }),
   ],
   schema: {
