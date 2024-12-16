@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/sanity-io/google-maps-input/compare/v4.0.1...v4.1.0) (2024-12-16)
+
+### Features
+
+- improve focus handling, open on double-click, support react 19 ([#75](https://github.com/sanity-io/google-maps-input/issues/75)) ([21541fc](https://github.com/sanity-io/google-maps-input/commit/21541fc2d273f0d983667c7be718a49f64f65a90))
+
 ## [4.0.1](https://github.com/sanity-io/google-maps-input/compare/v4.0.0...v4.0.1) (2024-04-09)
 
 ### Bug Fixes
