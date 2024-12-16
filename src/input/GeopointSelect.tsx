@@ -1,8 +1,8 @@
-import React from 'react'
+import {type FC, useCallback} from 'react'
 import {SearchInput} from '../map/SearchInput'
 import {GoogleMap} from '../map/Map'
 import {Marker} from '../map/Marker'
-import {LatLng, Geopoint} from '../types'
+import type {LatLng, Geopoint} from '../types'
 
 const fallbackLatLng: LatLng = {lat: 40.7058254, lng: -74.1180863}
 
@@ -14,65 +14,66 @@ interface SelectProps {
   defaultZoom?: number
 }
 
-export class GeopointSelect extends React.PureComponent<SelectProps> {
-  static defaultProps = {
-    defaultZoom: 8,
-    defaultLocation: {lng: 10.74609, lat: 59.91273},
-  }
-
-  mapRef = React.createRef<HTMLDivElement>()
-
-  getCenter() {
-    const {value = {}, defaultLocation = {}} = this.props
+export const GeopointSelect: FC<SelectProps> = ({
+  api,
+  value,
+  onChange,
+  defaultLocation = {lng: 10.74609, lat: 59.91273},
+  defaultZoom = 8,
+}) => {
+  const getCenter = useCallback(() => {
     const point: LatLng = {...fallbackLatLng, ...defaultLocation, ...value}
     return point
-  }
+  }, [value, defaultLocation])
 
-  handlePlaceChanged = (place: google.maps.places.PlaceResult) => {
-    if (!place.geometry?.location) {
-      return
-    }
+  const setValue = useCallback(
+    (geoPoint: google.maps.LatLng) => {
+      if (onChange) {
+        onChange(geoPoint)
+      }
+    },
+    [onChange],
+  )
 
-    this.setValue(place.geometry.location)
-  }
+  const handlePlaceChanged = useCallback(
+    (place: google.maps.places.PlaceResult) => {
+      if (!place.geometry?.location) {
+        return
+      }
+      setValue(place.geometry.location)
+    },
+    [setValue],
+  )
 
-  handleMarkerDragEnd = (event: google.maps.MapMouseEvent) => {
-    if (event.latLng) this.setValue(event.latLng)
-  }
+  const handleMarkerDragEnd = useCallback(
+    (event: google.maps.MapMouseEvent) => {
+      if (event.latLng) setValue(event.latLng)
+    },
+    [setValue],
+  )
 
-  handleMapClick = (event: google.maps.MapMouseEvent) => {
-    if (event.latLng) this.setValue(event.latLng)
-  }
+  const handleMapClick = useCallback(
+    (event: google.maps.MapMouseEvent) => {
+      if (event.latLng) setValue(event.latLng)
+    },
+    [setValue],
+  )
 
-  setValue(geoPoint: google.maps.LatLng) {
-    if (this.props.onChange) {
-      this.props.onChange(geoPoint)
-    }
-  }
-
-  render() {
-    const {api, defaultZoom, value, onChange} = this.props
-    return (
-      <GoogleMap
-        api={api}
-        location={this.getCenter()}
-        onClick={this.handleMapClick}
-        defaultZoom={defaultZoom}
-      >
-        {(map) => (
-          <>
-            <SearchInput api={api} map={map} onChange={this.handlePlaceChanged} />
-            {value && (
-              <Marker
-                api={api}
-                map={map}
-                position={value}
-                onMove={onChange ? this.handleMarkerDragEnd : undefined}
-              />
-            )}
-          </>
-        )}
-      </GoogleMap>
-    )
-  }
+  return (
+    <GoogleMap api={api} location={getCenter()} onClick={handleMapClick} defaultZoom={defaultZoom}>
+      {(map) => (
+        <>
+          <SearchInput api={api} map={map} onChange={handlePlaceChanged} />
+          {value && (
+            <Marker
+              api={api}
+              map={map}
+              position={value}
+              onMove={onChange ? handleMarkerDragEnd : undefined}
+            />
+          )}
+        </>
+      )}
+    </GoogleMap>
+  )
 }

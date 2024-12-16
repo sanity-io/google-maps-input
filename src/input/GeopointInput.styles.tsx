@@ -8,5 +8,4 @@ export const PreviewImage = styled.img`
 
 export const DialogInnerContainer = styled.div`
   height: 40rem;
-  width: 50rem;
 `

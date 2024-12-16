@@ -70,6 +70,8 @@ MIT-licensed. See LICENSE.
 
 ## Develop & test
 
+Add a Google Maps API key to `.env.local` (see `.env.example` for example format).
+
 This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
 with default configuration for build & watch scripts.
 

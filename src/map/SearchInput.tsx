@@ -1,6 +1,6 @@
-import * as React from 'react'
 import {TextInput} from '@sanity/ui'
 import {WrapperContainer} from './SearchInput.styles'
+import {createRef, PureComponent} from 'react'
 
 interface Props {
   api: typeof window.google.maps
@@ -8,8 +8,8 @@ interface Props {
   onChange: (result: google.maps.places.PlaceResult) => void
 }
 
-export class SearchInput extends React.PureComponent<Props> {
-  searchInputRef = React.createRef<HTMLInputElement>()
+export class SearchInput extends PureComponent<Props> {
+  searchInputRef = createRef<HTMLInputElement>()
   autoComplete: google.maps.places.Autocomplete | undefined
 
   handleChange = () => {

@@ -1,4 +1,4 @@
-import {GoogleMapsInputConfig} from './index'
+import type {GoogleMapsInputConfig} from './types'
 
 let config: GoogleMapsInputConfig
 

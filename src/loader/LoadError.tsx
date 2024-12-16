@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {Card, Box, Text, Code} from '@sanity/ui'
 
 type Props = {error: {message?: string}; isAuthError: false} | {isAuthError: true}

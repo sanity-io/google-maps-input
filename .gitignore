@@ -58,3 +58,12 @@ yalc.lock
 
 # Compiled plugin
 dist
+
+# Typescript
+tsconfig.tsbuildinfo
+
+# Sanity
+.sanity
+
+# Local env files (eg .env.local)
+*.local

@@ -1,16 +1,16 @@
 import {
-  DiffComponent,
-  ObjectDiff,
-  DiffProps as GenericDiffProps,
+  type DiffComponent,
+  type ObjectDiff,
+  type DiffProps as GenericDiffProps,
   DiffTooltip,
   getAnnotationAtPath,
 } from 'sanity'
 import {GoogleMapsLoadProxy} from '../loader/GoogleMapsLoadProxy'
 import {GoogleMap} from '../map/Map'
-import {Geopoint} from '../types'
+import type {Geopoint} from '../types'
+import {getGeoConfig} from '../global-workaround'
 import {GeopointMove} from './GeopointMove'
 import {RootContainer} from './GeopointFieldDiff.styles'
-import {getGeoConfig} from '../global-workaround'
 
 export type DiffProps = GenericDiffProps<ObjectDiff<Geopoint>>
 

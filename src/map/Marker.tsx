@@ -1,5 +1,5 @@
-import * as React from 'react'
-import {LatLng} from '../types'
+import {PureComponent, type MutableRefObject} from 'react'
+import type {LatLng} from '../types'
 import {latLngAreEqual} from './util'
 
 const markerPath =
@@ -14,11 +14,11 @@ interface Props {
   zIndex?: number
   opacity?: number
   label?: string
-  markerRef?: React.MutableRefObject<google.maps.Marker | undefined>
+  markerRef?: MutableRefObject<google.maps.Marker | undefined>
   color?: {background: string; border: string; text: string}
 }
 
-export class Marker extends React.PureComponent<Props> {
+export class Marker extends PureComponent<Props> {
   marker: google.maps.Marker | undefined
 
   eventHandlers: {
