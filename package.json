@@ -44,6 +44,7 @@
   ],
   "scripts": {
     "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
+    "build:studio": "sanity build studio -y",
     "dev": "sanity dev",
     "prepublishOnly": "npm run build",
     "clean": "rimraf dist",
