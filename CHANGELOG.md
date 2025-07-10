@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/sanity-io/google-maps-input/compare/v4.1.0...v4.1.1) (2025-07-10)
+
+### Bug Fixes
+
+- **deps:** allow studio v4 in peer dep ranges + update main.yml ([#80](https://github.com/sanity-io/google-maps-input/issues/80)) ([200f8c7](https://github.com/sanity-io/google-maps-input/commit/200f8c7d3a6d1c2c245f71b680f49a3ac6c6eab0))
+
 ## [4.1.0](https://github.com/sanity-io/google-maps-input/compare/v4.0.1...v4.1.0) (2024-12-16)
 
 ### Features
