@@ -14,8 +14,23 @@ export interface Geopoint {
   alt?: number
 }
 
+export interface GeopointRadius {
+  _type: 'geopointRadius'
+  _key?: string
+  lat: number
+  lng: number
+  alt?: number
+  radius: number
+}
+
 export interface GeopointSchemaType extends ObjectSchemaType {
   diffComponent?: DiffComponent<ObjectDiff<Geopoint>> | DiffComponentOptions<ObjectDiff<Geopoint>>
+}
+
+export interface GeopointRadiusSchemaType extends ObjectSchemaType {
+  diffComponent?:
+    | DiffComponent<ObjectDiff<GeopointRadius>>
+    | DiffComponentOptions<ObjectDiff<GeopointRadius>>
 }
 
 export interface GoogleMapsInputConfig {
@@ -26,4 +41,6 @@ export interface GoogleMapsInputConfig {
     lat: number
     lng: number
   }
+  defaultRadiusZoom?: number
+  defaultRadius?: number
 }
