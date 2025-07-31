@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/sanity-io/google-maps-input/compare/v4.1.1...v4.2.0) (2025-07-31)
+
+### Features
+
+- adds a circle radius input ([#81](https://github.com/sanity-io/google-maps-input/issues/81)) ([f5a2209](https://github.com/sanity-io/google-maps-input/commit/f5a2209b5596612088f528d64051f37bc78b950b))
+
+### Bug Fixes
+
+- **deps:** Update dependency @sanity/ui to v3 ([#82](https://github.com/sanity-io/google-maps-input/issues/82)) ([38f060e](https://github.com/sanity-io/google-maps-input/commit/38f060e2c67673cade8dc01ae0b7249f4b051096))
+
 ## [4.1.1](https://github.com/sanity-io/google-maps-input/compare/v4.1.0...v4.1.1) (2025-07-10)
 
 ### Bug Fixes
