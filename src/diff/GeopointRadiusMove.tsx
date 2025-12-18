@@ -15,10 +15,10 @@ export function GeopointRadiusMove({diff, api, map, label}: GeopointRadiusMovePr
   const {fromValue: from, toValue: to} = diff
   const annotation = diff.isChanged ? diff.annotation : undefined
   const userColor = useUserColor(annotation ? annotation.author : null) || undefined
-  const fromRef = useRef<google.maps.Marker>()
-  const toRef = useRef<google.maps.Marker>()
-  const fromCircleRef = useRef<google.maps.Circle>()
-  const toCircleRef = useRef<google.maps.Circle>()
+  const fromRef = useRef<google.maps.Marker>(undefined)
+  const toRef = useRef<google.maps.Marker>(undefined)
+  const fromCircleRef = useRef<google.maps.Circle>(undefined)
+  const toCircleRef = useRef<google.maps.Circle>(undefined)
 
   // Create circles for radius visualization
   useEffect(() => {
