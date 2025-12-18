@@ -52,7 +52,7 @@ export const GeopointRadiusSelect: FC<SelectProps> = ({
   defaultRadius = 1000,
 }) => {
   const circleRef = useRef<google.maps.Circle | null>(null)
-  const markerRef = useRef<google.maps.Marker | undefined>()
+  const markerRef = useRef<google.maps.Marker | undefined>(undefined)
   const isMarkerDragging = useRef(false)
 
   const getCenter = useCallback(() => {
